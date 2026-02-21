@@ -1,7 +1,7 @@
 {
   "name": "your-advisor-backend",
   "version": "1.0.0",
-  "description": "Backend for your_Advisor – personalized career & learning advisor",
+  "description": "Backend for your_Advisor - personalized career and learning advisor",
   "type": "module",
   "main": "src/server.js",
   "scripts": {
@@ -18,6 +18,9 @@
   ],
   "author": "your_Advisor Team",
   "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
   "dependencies": {
     "bcrypt": "^5.1.0",
     "dotenv": "^16.4.5",
