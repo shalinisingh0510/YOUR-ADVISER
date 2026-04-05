@@ -1,41 +1,58 @@
 import { NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, BookOpen, BrainCircuit, Target, Sparkles, Zap, MapPin, CheckCircle2 } from "lucide-react";
+import { ArrowRight, BookOpen, BrainCircuit, Target, Sparkles, MapPin, CheckCircle2, Briefcase, GraduationCap, ArrowUpRight, Code, Trophy, Network } from "lucide-react";
 
-const highlights = [
-  "Curated free resources",
-  "Weekly learning rhythm",
-  "Clear skill checkpoints",
-  "Career-aligned milestones",
+// Content Data
+const studentFeatures = [
+  "Curated learning resources",
+  "Interview prep & mock tests",
+  "Internship tracking",
+  "Peer study groups",
+];
+
+const proFeatures = [
+  "Leadership & soft skills",
+  "Advanced system design",
+  "Network expansion",
+  "Salary negotiation tactics",
 ];
 
 const features = [
   {
-    title: "Smart Questionnaire",
-    desc: "Understand your learning style, prior knowledge, and daily bandwidth in minutes.",
-    icon: <BrainCircuit className="w-6 h-6 text-purple-500" />
+    title: "AI-Powered Assessment",
+    desc: "Discover where you stand in minutes with our adaptive tech and soft skills evaluation.",
+    icon: <BrainCircuit className="w-6 h-6 text-cyan-400" />,
+    color: "from-cyan-500/20 to-cyan-500/0",
+    border: "border-cyan-500/30"
   },
   {
-    title: "AI-Powered Roadmap",
-    desc: "Get a step-by-step path tailored exactly to your goals using curated free resources.",
-    icon: <MapPin className="w-6 h-6 text-blue-500" />
+    title: "Dynamic Roadmaps",
+    desc: "A living, breathing career path that adapts to market trends and your personal growth.",
+    icon: <MapPin className="w-6 h-6 text-violet-400" />,
+    color: "from-violet-500/20 to-violet-500/0",
+    border: "border-violet-500/30"
   },
   {
-    title: "Progress Tracking",
-    desc: "Stay consistent and motivated with weekly check-ins and visual milestones.",
-    icon: <Target className="w-6 h-6 text-emerald-500" />
+    title: "Actionable Milestones",
+    desc: "Break down multi-year goals into weekly, achievable tasks that build momentum.",
+    icon: <Target className="w-6 h-6 text-pink-400" />,
+    color: "from-pink-500/20 to-pink-500/0",
+    border: "border-pink-500/30"
   },
   {
-    title: "Bite-Sized Sessions",
-    desc: "Plan your daily study sessions without overwhelm to fit your busy schedule.",
-    icon: <Zap className="w-6 h-6 text-amber-500" />
+    title: "Exclusive Networks",
+    desc: "Connect with mentors and peers who share your exact career trajectory.",
+    icon: <Network className="w-6 h-6 text-amber-400" />,
+    color: "from-amber-500/20 to-amber-500/0",
+    border: "border-amber-500/30"
   },
 ];
 
 const stats = [
-  { label: "Active learners", value: "12k+" },
-  { label: "Roadmaps generated", value: "38k+" },
-  { label: "Completion rate", value: "94%" },
+  { label: "Active Professionals", value: "45k+" },
+  { label: "Student Placements", value: "12k+" },
+  { label: "Goal Completion", value: "94%" },
+  { label: "Career Pivot Success", value: "88%" },
 ];
 
 const containerVariants = {
@@ -57,118 +74,192 @@ const itemVariants = {
 
 export default function Home() {
   return (
-    <div className="w-full overflow-hidden">
-      {/* Background Ornaments */}
+    <div className="w-full overflow-hidden bg-[#030712] text-slate-50 selection:bg-cyan-500/30">
+      {/* Background Ambient Ornaments */}
       <div className="absolute top-0 inset-x-0 h-screen overflow-hidden -z-10 pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-96 h-96 bg-primary/20 rounded-full blur-[100px] animate-blob" />
-        <div className="absolute top-40 -left-20 w-72 h-72 bg-purple-500/20 rounded-full blur-[100px] animate-blob animation-delay-2000" />
-        <div className="absolute -bottom-20 left-1/3 w-80 h-80 bg-accent/20 rounded-full blur-[100px] animate-blob animation-delay-4000" />
+        <div className="absolute top-[-10%] right-[-5%] w-[800px] h-[800px] bg-cyan-600/10 rounded-full blur-[120px] animate-blob mix-blend-screen" />
+        <div className="absolute top-[20%] left-[-10%] w-[600px] h-[600px] bg-violet-600/10 rounded-full blur-[120px] animate-blob animation-delay-2000 mix-blend-screen" />
+        <div className="absolute bottom-[-10%] right-[20%] w-[700px] h-[700px] bg-pink-600/10 rounded-full blur-[120px] animate-blob animation-delay-4000 mix-blend-screen" />
+        {/* Optional Noise Overlay */}
+        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
       </div>
 
-      <div className="container px-4 mx-auto max-w-6xl">
-        {/* Hero Section */}
-        <section className="pt-16 pb-20 md:pt-24 md:pb-32 grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+      <div className="container px-4 md:px-8 mx-auto max-w-7xl relative z-10">
+        
+        {/* --- HERO SECTION --- */}
+        <section className="min-h-screen flex items-center pt-24 pb-20 md:pt-32 md:pb-32 grid lg:grid-cols-2 gap-16 lg:gap-8">
           <motion.div
             initial="hidden"
             animate="visible"
             variants={containerVariants}
-            className="flex flex-col gap-6"
+            className="flex flex-col gap-8"
           >
-            <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary dark:text-accent w-fit font-medium text-sm backdrop-blur-sm">
+            <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-slate-800/50 border border-slate-700/50 text-cyan-400 w-fit font-medium text-sm backdrop-blur-md shadow-[0_0_20px_rgba(34,211,238,0.1)]">
               <Sparkles className="w-4 h-4" />
-              <span>Smart learning guidance for ambitious students</span>
+              <span className="tracking-wide">Limitless growth logic.</span>
             </motion.div>
 
-            <motion.h1 variants={itemVariants} className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-foreground leading-[1.1]">
-              Build a career roadmap that feels <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-purple-500 to-accent text-glow">personal.</span>
+            <motion.h1 variants={itemVariants} className="text-5xl md:text-7xl lg:text-[5.5rem] font-bold tracking-tighter leading-[1.05]">
+              Architect your <br/>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-indigo-400 to-pink-500 drop-shadow-[0_0_30px_rgba(129,140,248,0.3)]">
+                future self.
+              </span>
             </motion.h1>
 
-            <motion.p variants={itemVariants} className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-xl leading-relaxed">
-              your_Advisor blends intelligent career mapping, weekly planning, and high-quality free resources into one beautiful learning portal.
+            <motion.p variants={itemVariants} className="text-lg md:text-xl text-slate-400 max-w-xl leading-relaxed font-light">
+              Your Advisor is a premium intelligence platform mapping hyper-personalized trajectories for <span className="text-slate-200 font-medium">ambitious students</span> and <span className="text-slate-200 font-medium">seasoned professionals</span>.
             </motion.p>
 
-            <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 mt-4">
-              <NavLink to="/signup" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-foreground text-background dark:bg-white dark:text-black rounded-full font-semibold text-lg hover:scale-105 active:scale-95 transition-all shadow-xl shadow-black/10 dark:shadow-white/10 group">
-                Start Your Journey
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-5 mt-4">
+              <NavLink to="/signup" className="relative group inline-flex items-center justify-center gap-2 px-8 py-4 bg-slate-100 text-slate-950 rounded-full font-bold text-lg transition-all overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-300 to-indigo-300 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm"></div>
+                <span className="relative z-10 flex items-center gap-2">
+                  Launch Platform <ArrowRight className="w-5 h-5 group-hover:rotate-[-45deg] transition-transform duration-300" />
+                </span>
               </NavLink>
-              <NavLink to="/questionnaire" className="inline-flex items-center justify-center px-8 py-4 rounded-full font-semibold text-lg border-2 border-border hover:border-gray-400 dark:hover:border-gray-500 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm transition-all hover:bg-white dark:hover:bg-gray-800">
-                Take the Quiz
+              <NavLink to="/questionnaire" className="inline-flex items-center justify-center px-8 py-4 rounded-full font-semibold text-lg border border-slate-700 hover:border-slate-500 bg-slate-900/50 backdrop-blur-md transition-all hover:bg-slate-800 text-slate-300 hover:text-white relative z-10">
+                Take the Assessment
               </NavLink>
-            </motion.div>
-
-            <motion.div variants={itemVariants} className="flex flex-wrap gap-3 mt-8">
-              {highlights.map((item) => (
-                <div key={item} className="flex items-center gap-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                  <CheckCircle2 className="w-4 h-4 text-accent" />
-                  {item}
-                </div>
-              ))}
             </motion.div>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
-            animate={{ opacity: 1, scale: 1, rotate: 0 }}
-            transition={{ duration: 0.8, type: "spring" }}
-            className="relative lg:ml-auto w-full max-w-md"
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, type: "spring", bounce: 0.4 }}
+            className="relative lg:ml-auto w-full max-w-lg perspective-1000"
           >
-            {/* Main Interactive Card */}
-            <div className="glass-card rounded-[2rem] p-8 relative z-10 border border-white/40 dark:border-gray-700/50 shadow-2xl">
-              <div className="flex items-center justify-between mb-8">
-                <div>
-                  <h3 className="text-xl font-bold font-display">Today's Plan</h3>
-                  <p className="text-sm text-gray-500 font-medium mt-1">3 tasks • 45 mins left</p>
-                </div>
-                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                  <BookOpen className="w-6 h-6" />
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <div className="group p-4 rounded-2xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 hover:border-primary/30 dark:hover:border-primary/30 hover:shadow-md transition-all cursor-pointer flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
-                    <span className="font-bold">1</span>
-                  </div>
+            {/* 3D Floating Interactive Planner Card */}
+            <div className="relative group transform-gpu transition-all duration-700 hover:-rotate-y-6 hover:rotate-x-6 hover:scale-[1.02]">
+              <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 via-indigo-500 to-pink-500 rounded-[2.5rem] blur-xl opacity-30 group-hover:opacity-60 transition duration-1000 group-hover:duration-200" />
+              <div className="bg-slate-900/60 rounded-[2.5rem] p-8 md:p-10 relative z-10 border border-slate-700/50 backdrop-blur-xl isolate">
+                
+                <div className="flex items-center justify-between mb-10">
                   <div>
-                    <strong className="block text-gray-900 dark:text-white font-semibold">System Design Recap</strong>
-                    <span className="text-sm text-gray-500">15 mins • Reading</span>
+                    <h3 className="text-2xl font-bold tracking-tight text-white">Daily Protocol</h3>
+                    <p className="text-sm text-cyan-400 font-medium mt-1 uppercase tracking-wider">Phase 3: Mastery</p>
+                  </div>
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-indigo-500/20 flex items-center justify-center text-cyan-300 border border-cyan-500/20 shadow-[0_0_15px_rgba(6,182,212,0.2)]">
+                    <Code className="w-7 h-7" />
                   </div>
                 </div>
 
-                <div className="group p-4 rounded-2xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 hover:border-primary/30 dark:hover:border-primary/30 hover:shadow-md transition-all cursor-pointer flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 flex items-center justify-center shrink-0">
-                    <span className="font-bold">2</span>
-                  </div>
-                  <div>
-                    <strong className="block text-gray-900 dark:text-white font-semibold">React Hooks Dive</strong>
-                    <span className="text-sm text-gray-500">20 mins • Video</span>
-                  </div>
-                </div>
-
-                <div className="group p-4 rounded-2xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 hover:border-primary/30 dark:hover:border-primary/30 hover:shadow-md transition-all cursor-pointer flex items-center gap-4 opacity-60 hover:opacity-100">
-                  <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
-                    <CheckCircle2 className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <strong className="block text-gray-900 dark:text-white font-semibold line-through decoration-2">CSS Grid Quiz</strong>
-                    <span className="text-sm text-emerald-600 dark:text-emerald-400 font-medium">Completed</span>
-                  </div>
+                <div className="space-y-4">
+                  {[
+                    { title: "Review Microservices", tag: "Architecture", time: "45m", active: true },
+                    { title: "Salary Negotiation VR", tag: "Soft Skills", time: "20m", active: false },
+                    { title: "K8s Deployment Lab", tag: "Hands-on", time: "1h", active: false },
+                  ].map((task, i) => (
+                    <div key={i} className={`group/task p-4 rounded-2xl border transition-all duration-300 flex items-center justify-between cursor-pointer
+                      ${task.active ? 'bg-slate-800/80 border-cyan-500/30 shadow-[0_0_20px_rgba(6,182,212,0.1)] text-white' : 'bg-slate-900/40 border-slate-800 hover:border-slate-600 text-slate-300 hover:bg-slate-800/60'}`}>
+                      <div className="flex items-center gap-4">
+                        <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 transition-colors
+                          ${task.active ? 'bg-cyan-500/20 text-cyan-400' : 'bg-slate-800 text-slate-500 group-hover/task:text-slate-300'}`}>
+                          <span className="font-bold font-mono">0{i+1}</span>
+                        </div>
+                        <div>
+                          <strong className="block text-[15px] font-semibold">{task.title}</strong>
+                          <span className="text-xs tracking-wide font-medium opacity-70 mt-0.5 block">{task.tag}</span>
+                        </div>
+                      </div>
+                      <span className="text-sm font-mono opacity-50">{task.time}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
-
-            {/* Floating Decorative Elements */}
-            <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-gradient-to-br from-accent to-blue-500 rounded-2xl -rotate-6 opacity-50 blur-xl -z-10" />
-            <div className="absolute -top-6 -right-6 w-32 h-32 bg-gradient-to-br from-purple-500 to-primary rounded-full opacity-50 blur-xl -z-10" />
+            
+            {/* Orbital glowing ring */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] rounded-full border border-slate-700/30 z-0 scale-y-50 animate-[spin_20s_linear_infinite] pointer-events-none" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] rounded-full border border-slate-800/30 z-0 scale-y-50 animate-[spin_30s_linear_infinite_reverse] pointer-events-none" />
           </motion.div>
         </section>
 
-        {/* Features Section */}
-        <section className="py-20 md:py-32">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6 font-display">Your personal learning orchestrator</h2>
-            <p className="text-lg text-gray-600 dark:text-gray-400">Everything you need to master new skills without feeling overwhelmed or lost in tutorial hell.</p>
+        {/* --- DUAL PATH SECTION --- */}
+        <section className="py-24 relative z-10 bg-[#030712]">
+          <div className="text-center max-w-3xl mx-auto mb-20">
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">Designed for every stage</h2>
+            <p className="text-lg text-slate-400 leading-relaxed font-light">
+              Whether you are laying the foundation or vaulting into executive leadership, we build a scaffold around your ambition.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 lg:gap-12 pl-0 md:px-12">
+            {/* Student Track */}
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              className="relative p-1 rounded-3xl bg-gradient-to-b from-slate-800 to-slate-900 group"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="bg-slate-950 border border-slate-800 h-full rounded-[1.4rem] p-10 relative z-10 flex flex-col">
+                <div className="w-16 h-16 bg-indigo-500/10 border border-indigo-500/20 rounded-2xl flex items-center justify-center mb-8 text-indigo-400 shadow-[0_0_30px_rgba(99,102,241,0.15)]">
+                  <GraduationCap className="w-8 h-8" />
+                </div>
+                <h3 className="text-3xl font-bold mb-4">For Students</h3>
+                <p className="text-slate-400 mb-8 leading-relaxed font-light">Bridge the gap between academic theory and industry reality. Land your dream first role faster.</p>
+                
+                <ul className="space-y-5 flex-1">
+                  {studentFeatures.map((f, idx) => (
+                    <li key={idx} className="flex items-start gap-4 text-slate-300">
+                      <div className="mt-1 w-5 h-5 rounded-full border border-indigo-500/30 flex items-center justify-center bg-indigo-500/10 shrink-0">
+                        <CheckCircle2 className="w-3 h-3 text-indigo-400" />
+                      </div>
+                      <span className="font-medium">{f}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <button className="mt-12 flex items-center gap-2 text-indigo-400 font-semibold hover:text-indigo-300 transition-colors">
+                  Explore Student Path <ArrowUpRight className="w-4 h-4" />
+                </button>
+              </div>
+            </motion.div>
+
+            {/* Professional Track */}
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ delay: 0.2 }}
+              className="relative p-1 rounded-3xl bg-gradient-to-b from-slate-800 to-slate-900 group"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="bg-slate-950 border border-slate-800 h-full rounded-[1.4rem] p-10 relative z-10 flex flex-col">
+                <div className="w-16 h-16 bg-cyan-500/10 border border-cyan-500/20 rounded-2xl flex items-center justify-center mb-8 text-cyan-400 shadow-[0_0_30px_rgba(6,182,212,0.15)]">
+                  <Briefcase className="w-8 h-8" />
+                </div>
+                <h3 className="text-3xl font-bold mb-4">For Professionals</h3>
+                <p className="text-slate-400 mb-8 leading-relaxed font-light">Upskill, pivot, or climb the ladder. Strategic guidance for high-leverage career maneuvers.</p>
+                
+                <ul className="space-y-5 flex-1">
+                  {proFeatures.map((f, idx) => (
+                    <li key={idx} className="flex items-start gap-4 text-slate-300">
+                      <div className="mt-1 w-5 h-5 rounded-full border border-cyan-500/30 flex items-center justify-center bg-cyan-500/10 shrink-0">
+                        <CheckCircle2 className="w-3 h-3 text-cyan-400" />
+                      </div>
+                      <span className="font-medium">{f}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <button className="mt-12 flex items-center gap-2 text-cyan-400 font-semibold hover:text-cyan-300 transition-colors">
+                  Explore Pro Path <ArrowUpRight className="w-4 h-4" />
+                </button>
+              </div>
+            </motion.div>
+
+          </div>
+        </section>
+
+        {/* --- CORE ENGINE SECTION --- */}
+        <section className="py-24 relative z-10 bg-[#030712]">
+          <div className="max-w-3xl mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">The Intelligence Engine</h2>
+            <p className="text-lg text-slate-400 leading-relaxed font-light">
+              Not just a curriculum, but a responsive operating system for your professional growth.
+            </p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -177,16 +268,17 @@ export default function Home() {
                 key={feature.title}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, margin: "-50px" }}
                 transition={{ delay: idx * 0.1 }}
-                whileHover={{ y: -5 }}
-                className="glass-card p-8 rounded-3xl border border-white/50 dark:border-gray-700"
+                whileHover={{ y: -8, scale: 1.02 }}
+                className={`bg-slate-900/50 backdrop-blur-sm p-8 rounded-3xl border border-slate-800 hover:bg-slate-800/80 transition-all duration-300 relative overflow-hidden group`}
               >
-                <div className="w-14 h-14 rounded-2xl bg-gray-50 dark:bg-gray-800/50 flex items-center justify-center mb-6 shadow-sm">
+                <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${feature.color} opacity-0 group-hover:opacity-100 transition-opacity`} />
+                <div className={`w-14 h-14 rounded-2xl bg-slate-950 border ${feature.border} flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 transition-transform duration-500`}>
                   {feature.icon}
                 </div>
-                <h3 className="text-xl font-bold mb-3">{feature.title}</h3>
-                <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-sm">
+                <h3 className="text-xl text-white font-bold mb-3 tracking-tight">{feature.title}</h3>
+                <p className="text-slate-400 leading-relaxed text-sm font-light">
                   {feature.desc}
                 </p>
               </motion.div>
@@ -194,23 +286,26 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Stats Section */}
-        <section className="py-20 mb-20">
-          <div className="bg-foreground text-background dark:bg-surface-dark dark:text-white rounded-[3rem] p-12 md:p-20 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-br from-primary/20 to-purple-600/20 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />
-
-            <div className="relative z-10 grid lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6">Proven impact on student success</h2>
-                <p className="text-lg text-gray-300 dark:text-gray-400 max-w-lg mb-8">
-                  Join thousands of learners who have found clarity and direction through our personalized roadmaps.
+        {/* --- STATS SECTION --- */}
+        <section className="py-24 mb-20 relative z-10 bg-[#030712]">
+          {/* Glassmorphic huge container */}
+          <div className="relative rounded-[3rem] p-12 md:p-20 overflow-hidden border border-slate-700/50 bg-slate-900/30 backdrop-blur-md">
+            
+            {/* Inner glowing orb */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-indigo-500/10 rounded-full blur-[100px] pointer-events-none mix-blend-screen" />
+            
+            <div className="relative z-10 flex flex-col lg:flex-row gap-16 justify-between items-center">
+              <div className="max-w-xl text-center lg:text-left">
+                <div className="inline-flex items-center justify-center p-3 sm:p-4 rounded-2xl bg-white/5 border border-white/10 mb-8 backdrop-blur-xl">
+                  <Trophy className="w-8 h-8 text-pink-400" />
+                </div>
+                <h2 className="text-4xl md:text-6xl font-bold tracking-tighter mb-6">Quantifiable velocity.</h2>
+                <p className="text-xl text-slate-300 font-light leading-relaxed mb-8">
+                  Data-backed progression resulting in higher placement rates and faster promotions across the board.
                 </p>
-                <NavLink to="/signup" className="inline-flex items-center gap-2 font-semibold text-primary dark:text-accent hover:underline decoration-2 underline-offset-4">
-                  Join the community <ArrowRight className="w-5 h-5" />
-                </NavLink>
               </div>
 
-              <div className="grid sm:grid-cols-2 gap-6">
+              <div className="grid grid-cols-2 gap-4 sm:gap-8 w-full lg:w-auto">
                 {stats.map((stat, idx) => (
                   <motion.div
                     key={stat.label}
@@ -218,12 +313,12 @@ export default function Home() {
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
                     transition={{ delay: idx * 0.1 }}
-                    className="bg-white/5 dark:bg-white/5 border border-white/10 p-8 rounded-3xl backdrop-blur-sm"
+                    className="flex flex-col items-center lg:items-start p-6 bg-slate-950/40 border border-slate-800 rounded-3xl"
                   >
-                    <strong className="block text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-br from-white to-gray-400 dark:from-white dark:to-gray-500 mb-2">
+                    <strong className="block text-4xl md:text-5xl font-black bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400 mb-2 font-mono">
                       {stat.value}
                     </strong>
-                    <span className="text-gray-400 font-medium">{stat.label}</span>
+                    <span className="text-slate-400 font-medium text-sm text-center lg:text-left tracking-wide">{stat.label}</span>
                   </motion.div>
                 ))}
               </div>
