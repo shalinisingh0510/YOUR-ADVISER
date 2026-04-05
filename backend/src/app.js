@@ -1,6 +1,7 @@
 import express from "express";
 import authRoutes from "./modules/auth/auth.routes.js";
 import questionnaireRoutes from "./modules/questionnaire/questionnaire.routes.js";
+import roadmapRoutes from "./modules/roadmap/roadmap.routes.js";
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.get("/api/health", (req, res) => {
 
 app.use("/api/auth", authRoutes);
 app.use("/api/questionnaire", questionnaireRoutes);
+app.use("/api/roadmap", roadmapRoutes);
 
 app.use((req, res) => {
   res.status(404).json({ message: "Route not found" });
