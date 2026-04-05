@@ -39,3 +39,7 @@ export const login = async (req, res) => {
     res.status(status).json({ message: error.message || "Login failed" });
   }
 };
+
+export const getProfile = async (req, res) => {
+  res.json({ user: req.user });
+};

@@ -1,25 +1,5 @@
 import pool from "../../config/db.js";
 
-const initializeTables = async () => {
-  await pool.query(`
-    CREATE TABLE IF NOT EXISTS questionnaire_answers (
-      id SERIAL PRIMARY KEY,
-      user_id INTEGER NOT NULL,
-      answers JSONB NOT NULL,
-      signals JSONB NOT NULL,
-      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    );
-
-    CREATE TABLE IF NOT EXISTS aptitude_answers (
-      id SERIAL PRIMARY KEY,
-      user_id INTEGER NOT NULL,
-      answers JSONB NOT NULL,
-      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    );
-  `);
-};
-initializeTables().catch(console.error);
-
 export const processQuestionnaire = (answers) => {
   const signals = {
     learningAbility: answers.learning_ability || "Average pace",

@@ -29,4 +29,15 @@ export const initDb = async () => {
       created_at TIMESTAMP DEFAULT NOW()
     );
   `);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS roadmaps (
+      id SERIAL PRIMARY KEY,
+      user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+      focus_area VARCHAR(255),
+      content JSONB NOT NULL,
+      progress INTEGER DEFAULT 0,
+      created_at TIMESTAMP DEFAULT NOW()
+    );
+  `);
 };

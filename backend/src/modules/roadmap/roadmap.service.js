@@ -5,21 +5,6 @@ const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY
 });
 
-// Create roadmap table if not exists
-const initializeRoadmapTable = async () => {
-  await pool.query(`
-    CREATE TABLE IF NOT EXISTS roadmaps (
-      id SERIAL PRIMARY KEY,
-      user_id INTEGER NOT NULL,
-      focus_area VARCHAR(255),
-      content JSONB NOT NULL,
-      progress INTEGER DEFAULT 0,
-      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    );
-  `);
-};
-initializeRoadmapTable().catch(console.error);
-
 export const generateGroqRoadmap = async (userId, answers) => {
   const prompt = `
     You are an expert career counselor and senior developer. 

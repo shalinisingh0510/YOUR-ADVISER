@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import api from "../../services/api.js";
 import {
   CheckCircle2,
   Circle,
@@ -14,54 +15,6 @@ import {
   Clock,
   Layout
 } from "lucide-react";
-
-const sampleRoadmap = [
-  {
-    id: "week1",
-    title: "Foundations",
-    duration: "Week 1",
-    status: "active",
-    tasks: [
-      { id: "t1", title: "Intro to HTML & CSS", type: "reading" },
-      { id: "t2", title: "Build a landing page", type: "practice" },
-      { id: "t3", title: "Watch 2 short videos", type: "video" }
-    ],
-    resources: [
-      { title: "HTML Crash Course", type: "video", url: "#" },
-      { title: "Responsive Web Design", type: "article", url: "#" }
-    ],
-  },
-  {
-    id: "week2",
-    title: "JavaScript Basics",
-    duration: "Week 2",
-    status: "upcoming",
-    tasks: [
-      { id: "t4", title: "Variables & functions", type: "reading" },
-      { id: "t5", title: "DOM practice", type: "practice" },
-      { id: "t6", title: "Mini project", type: "practice" }
-    ],
-    resources: [
-      { title: "MDN JavaScript Guide", type: "article", url: "#" },
-      { title: "JavaScript30", type: "practice", url: "#" }
-    ],
-  },
-  {
-    id: "week3",
-    title: "React Essentials",
-    duration: "Week 3",
-    status: "upcoming",
-    tasks: [
-      { id: "t7", title: "Components & props", type: "reading" },
-      { id: "t8", title: "State & hooks", type: "reading" },
-      { id: "t9", title: "Build a small app", type: "practice" }
-    ],
-    resources: [
-      { title: "React Docs", type: "article", url: "#" },
-      { title: "Scrimba React Course", type: "video", url: "#" }
-    ],
-  },
-];
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -78,15 +31,51 @@ const itemVariants = {
 
 export default function RoadmapView() {
   const [notes, setNotes] = useState("");
-  const [done, setDone] = useState({ t1: true });
-  const [activeWeek, setActiveWeek] = useState("week1");
+  const [done, setDone] = useState({});
+  const [activeWeek, setActiveWeek] = useState(null);
+  const [roadmapData, setRoadmapData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    let mounted = true;
+    api.get("/api/roadmap")
+      .then(res => {
+        if(mounted) {
+          try {
+            // DB returns the object. 'content' holds our JSON array.
+            const parsed = typeof res.data.roadmap.content === 'string' 
+              ? JSON.parse(res.data.roadmap.content) 
+              : res.data.roadmap.content;
+            
+            setRoadmapData(Array.isArray(parsed) ? parsed : (parsed?.roadmap || []));
+            if (parsed && Array.isArray(parsed) && parsed.length > 0) {
+              setActiveWeek(parsed[0].id);
+            } else if (parsed?.roadmap?.length > 0) {
+              setActiveWeek(parsed.roadmap[0].id);
+            }
+          } catch(e) {
+            console.error(e);
+            setError("Failed to parse roadmap structure.");
+          }
+          setLoading(false);
+        }
+      })
+      .catch(err => {
+        if(mounted){
+          setError("Failed to load roadmap or you haven't generated one yet.");
+          setLoading(false);
+        }
+      });
+    return () => mounted = false;
+  }, []);
 
   const toggleTask = (id) => {
     setDone((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
   const getTaskIcon = (type) => {
-    switch (type) {
+    switch (type?.toLowerCase()) {
       case 'video': return <MonitorPlay className="w-4 h-4 text-pink-500" />;
       case 'reading': return <BookOpen className="w-4 h-4 text-indigo-500" />;
       case 'practice': return <PenTool className="w-4 h-4 text-cyan-500" />;
@@ -95,10 +84,27 @@ export default function RoadmapView() {
   };
 
   const calculateProgress = () => {
-    const totalTasks = sampleRoadmap.reduce((acc, week) => acc + week.tasks.length, 0);
+    if(!roadmapData || roadmapData.length === 0) return 0;
+    const totalTasks = roadmapData.reduce((acc, week) => acc + (week.tasks?.length || 0), 0);
+    if(totalTasks === 0) return 0;
     const completedTasks = Object.values(done).filter(Boolean).length;
     return Math.round((completedTasks / totalTasks) * 100);
   };
+
+  if (loading) {
+     return <div className="min-h-[70vh] flex items-center justify-center">
+        <div className="w-10 h-10 border-4 border-cyan-500/30 border-t-cyan-500 rounded-full animate-spin" />
+     </div>;
+  }
+
+  if (error || !roadmapData || roadmapData.length === 0) {
+    return (
+      <div className="container px-4 py-8 mx-auto max-w-7xl w-full text-center mt-20">
+        <h2 className="text-2xl font-bold dark:text-white mb-4">{error || "No roadmap found."}</h2>
+        <a href="/questionnaire" className="px-6 py-2 bg-cyan-500 text-white rounded-lg">Generate one now</a>
+      </div>
+    );
+  }
 
   return (
     <div className="container px-4 py-8 mx-auto max-w-7xl w-full">
@@ -145,9 +151,9 @@ export default function RoadmapView() {
 
           {/* Main Timeline Area */}
           <motion.div variants={itemVariants} className="lg:col-span-2 space-y-6">
-            {sampleRoadmap.map((step, index) => {
+            {roadmapData.map((step, index) => {
               const isActive = activeWeek === step.id;
-              const isPast = index < sampleRoadmap.findIndex(s => s.id === activeWeek);
+              const isPast = index < roadmapData.findIndex(s => s.id === activeWeek);
 
               return (
                 <div
@@ -160,7 +166,7 @@ export default function RoadmapView() {
                   `}
                 >
                   {/* Decorative line connecting cards conceptually */}
-                  {index !== sampleRoadmap.length - 1 && (
+                  {index !== roadmapData.length - 1 && (
                     <div className="absolute left-10 md:left-12 bottom-0 w-0.5 h-6 bg-slate-200 dark:bg-slate-800 transition-colors translate-y-full z-0 hidden lg:block" />
                   )}
 

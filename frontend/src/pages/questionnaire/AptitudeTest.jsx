@@ -45,6 +45,8 @@ export default function AptitudeTest() {
     setStatus({ loading: true, error: "" });
     try {
       await api.post("/api/questionnaire/aptitude", { answers });
+      // Trigger Roadmap Generation
+      await api.post("/api/roadmap/generate", {});
       navigate("/roadmap");
     } catch (error) {
       setStatus({
