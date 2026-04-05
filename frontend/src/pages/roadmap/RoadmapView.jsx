@@ -87,10 +87,10 @@ export default function RoadmapView() {
 
   const getTaskIcon = (type) => {
     switch (type) {
-      case 'video': return <MonitorPlay className="w-4 h-4 text-blue-500" />;
-      case 'reading': return <BookOpen className="w-4 h-4 text-purple-500" />;
-      case 'practice': return <PenTool className="w-4 h-4 text-orange-500" />;
-      default: return <FileText className="w-4 h-4 text-primary" />;
+      case 'video': return <MonitorPlay className="w-4 h-4 text-pink-500" />;
+      case 'reading': return <BookOpen className="w-4 h-4 text-indigo-500" />;
+      case 'practice': return <PenTool className="w-4 h-4 text-cyan-500" />;
+      default: return <FileText className="w-4 h-4 text-slate-500" />;
     }
   };
 
@@ -109,30 +109,30 @@ export default function RoadmapView() {
         className="space-y-8"
       >
         {/* Header Dashboard */}
-        <motion.div variants={itemVariants} className="bg-white dark:bg-surface-dark rounded-3xl p-8 border border-gray-100 dark:border-gray-800 shadow-sm relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8 group">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-primary/10 transition-colors" />
+        <motion.div variants={itemVariants} className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-3xl p-8 border border-slate-200/50 dark:border-slate-800/50 shadow-md shadow-slate-200/20 dark:shadow-black/20 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8 group">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-cyan-500/20 transition-colors" />
 
           <div className="relative z-10 flex-1">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary dark:text-accent font-medium text-xs mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-700 dark:text-cyan-400 font-medium text-xs mb-4 border border-cyan-500/20">
               <Layout className="w-3.5 h-3.5" />
               <span>Learning Journey</span>
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white font-display mb-2">
+            <h1 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-2 tracking-tight drop-shadow-sm">
               Your Roadmap
             </h1>
-            <p className="text-gray-500 text-lg max-w-xl">
+            <p className="text-slate-500 dark:text-slate-400 text-lg max-w-xl font-light">
               Follow the timeline, check off tasks, and keep your notes in one beautifully organized space.
             </p>
           </div>
 
-          <div className="relative z-10 bg-gray-50 dark:bg-gray-800/50 p-6 rounded-2xl w-full md:w-64 shrink-0 border border-gray-100 dark:border-gray-700">
+          <div className="relative z-10 bg-slate-50 dark:bg-slate-800/80 p-6 rounded-2xl w-full md:w-64 shrink-0 border border-slate-200 dark:border-slate-700 shadow-inner">
             <div className="flex justify-between items-end mb-4">
-              <span className="text-sm font-semibold text-gray-500 uppercase tracking-wider">Progress</span>
-              <span className="text-2xl font-bold text-primary dark:text-accent">{calculateProgress()}%</span>
+              <span className="text-sm font-semibold text-slate-500 uppercase tracking-wider">Progress</span>
+              <span className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-indigo-500">{calculateProgress()}%</span>
             </div>
-            <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+            <div className="h-3 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden shadow-inner">
               <motion.div
-                className="h-full bg-gradient-to-r from-primary to-accent"
+                className="h-full bg-gradient-to-r from-cyan-500 to-indigo-500"
                 initial={{ width: 0 }}
                 animate={{ width: `${calculateProgress()}%` }}
                 transition={{ duration: 1, ease: "easeOut" }}
@@ -155,22 +155,22 @@ export default function RoadmapView() {
                   onClick={() => setActiveWeek(step.id)}
                   className={`relative p-6 md:p-8 rounded-3xl border transition-all duration-300 cursor-pointer overflow-hidden
                     ${isActive
-                      ? 'bg-white dark:bg-surface-dark border-primary/30 shadow-lg shadow-primary/5 ring-1 ring-primary/10'
-                      : 'bg-white/50 dark:bg-surface-dark/50 border-gray-100 dark:border-gray-800 hover:border-primary/20 hover:bg-white dark:hover:bg-surface-dark'}
+                      ? 'bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-cyan-500/30 shadow-lg shadow-cyan-500/10 ring-1 ring-cyan-500/20'
+                      : 'bg-white/50 dark:bg-slate-900/40 backdrop-blur-sm border-slate-100 dark:border-slate-800/50 hover:border-cyan-500/20 hover:bg-white/80 dark:hover:bg-slate-900/60'}
                   `}
                 >
                   {/* Decorative line connecting cards conceptually */}
                   {index !== sampleRoadmap.length - 1 && (
-                    <div className="absolute left-10 md:left-12 bottom-0 w-0.5 h-6 bg-gray-200 dark:bg-gray-800 translate-y-full z-0 hidden lg:block" />
+                    <div className="absolute left-10 md:left-12 bottom-0 w-0.5 h-6 bg-slate-200 dark:bg-slate-800 transition-colors translate-y-full z-0 hidden lg:block" />
                   )}
 
                   <div className="flex items-start gap-4 relative z-10 w-full">
                     {/* Status Indicator */}
                     <div className="shrink-0 pt-1 hidden sm:block">
                       <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-colors
-                          ${isActive ? 'bg-primary text-white shadow-md' :
-                          isPast ? 'bg-emerald-500 text-white' :
-                            'bg-gray-100 dark:bg-gray-800 text-gray-400'}
+                          ${isActive ? 'bg-cyan-500 text-white shadow-md shadow-cyan-500/30' :
+                          isPast ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20' :
+                            'bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500'}
                        `}>
                         {isPast ? <CheckCircle2 className="w-6 h-6" /> : <Calendar className="w-6 h-6" />}
                       </div>
@@ -180,15 +180,15 @@ export default function RoadmapView() {
                       {/* Card Header */}
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-2">
                         <div>
-                          <p className={`text-xs font-bold uppercase tracking-wider mb-1 ${isActive ? 'text-primary' : 'text-gray-500'}`}>
+                          <p className={`text-xs font-bold uppercase tracking-wider mb-1 ${isActive ? 'text-cyan-600 dark:text-cyan-400' : 'text-slate-500 dark:text-slate-400'}`}>
                             {step.duration}
                           </p>
-                          <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white truncate">
+                          <h3 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white truncate drop-shadow-sm">
                             {step.title}
                           </h3>
                         </div>
                         {isActive && (
-                          <span className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium text-primary bg-primary/10 rounded-full shrink-0">
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium text-cyan-700 dark:text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 rounded-full shrink-0">
                             <Clock className="w-3.5 h-3.5" /> In Progress
                           </span>
                         )}
@@ -199,11 +199,11 @@ export default function RoadmapView() {
                         <motion.div
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: 'auto' }}
-                          className="space-y-6 pt-2 border-t border-gray-100 dark:border-gray-800"
+                          className="space-y-6 pt-2 border-t border-slate-100 dark:border-slate-800"
                         >
                           {/* Tasks List */}
                           <div>
-                            <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                            <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                               <CheckCircle2 className="w-4 h-4 text-emerald-500" /> Tasks to complete
                             </h4>
                             <div className="space-y-3">
@@ -214,23 +214,23 @@ export default function RoadmapView() {
                                     whileHover={{ x: 4 }}
                                     key={task.id}
                                     onClick={(e) => { e.stopPropagation(); toggleTask(task.id); }}
-                                    className={`group flex items-center gap-3 p-3 rounded-xl border transition-all cursor-pointer
-                                      ${isDone ? 'bg-gray-50 dark:bg-gray-800/30 border-transparent' : 'bg-white dark:bg-surface-dark border-gray-100 dark:border-gray-700 hover:border-primary/30'}
+                                    className={`group flex items-center gap-3 p-3 rounded-xl border transition-all cursor-pointer shadow-sm
+                                      ${isDone ? 'bg-slate-50/50 dark:bg-slate-800/30 border-transparent opacity-80' : 'bg-white dark:bg-slate-900/80 border-slate-100 dark:border-slate-700 hover:border-cyan-500/30'}
                                     `}
                                   >
                                     <div className="shrink-0 transition-colors">
                                       {isDone ? (
                                         <CheckCircle2 className="w-6 h-6 text-emerald-500" />
                                       ) : (
-                                        <Circle className="w-6 h-6 text-gray-300 dark:text-gray-600 group-hover:text-primary" />
+                                        <Circle className="w-6 h-6 text-slate-300 dark:text-slate-600 group-hover:text-cyan-500" />
                                       )}
                                     </div>
                                     <div className="flex-1 min-w-0">
-                                      <span className={`block text-sm font-medium transition-all ${isDone ? 'text-gray-400 line-through' : 'text-gray-700 dark:text-gray-200'}`}>
+                                      <span className={`block text-sm font-medium transition-all ${isDone ? 'text-slate-400 line-through' : 'text-slate-700 dark:text-slate-200'}`}>
                                         {task.title}
                                       </span>
                                     </div>
-                                    <div className="shrink-0 p-1.5 rounded-lg bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700">
+                                    <div className="shrink-0 p-1.5 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-inner">
                                       {getTaskIcon(task.type)}
                                     </div>
                                   </motion.div>
@@ -241,8 +241,8 @@ export default function RoadmapView() {
 
                           {/* Suggested Resources */}
                           <div>
-                            <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
-                              <BookOpen className="w-4 h-4 text-blue-500" /> Resources
+                            <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
+                              <BookOpen className="w-4 h-4 text-cyan-500" /> Resources
                             </h4>
                             <div className="flex flex-wrap gap-2">
                               {step.resources.map((resource, i) => (
@@ -250,7 +250,7 @@ export default function RoadmapView() {
                                   key={i}
                                   href={resource.url}
                                   onClick={e => e.stopPropagation()}
-                                  className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors border border-transparent hover:border-gray-300 dark:hover:border-gray-600"
+                                  className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-medium text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-cyan-600 dark:hover:text-cyan-400 rounded-lg transition-colors border border-transparent hover:border-slate-300 dark:hover:border-slate-600"
                                 >
                                   {resource.type === 'video' ? <MonitorPlay className="w-3.5 h-3.5" /> : <FileText className="w-3.5 h-3.5" />}
                                   {resource.title}
@@ -270,45 +270,45 @@ export default function RoadmapView() {
           {/* Sidebar Area */}
           <motion.div variants={itemVariants} className="space-y-6 lg:sticky lg:top-24">
             {/* Notes Widget */}
-            <div className="bg-white dark:bg-surface-dark rounded-3xl p-6 border border-gray-100 dark:border-gray-800 shadow-sm flex flex-col h-[500px]">
+            <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-3xl p-6 border border-slate-200/50 dark:border-slate-800/50 shadow-md shadow-slate-200/20 dark:shadow-black/20 flex flex-col h-[500px]">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-xl bg-orange-50 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 border border-orange-100 dark:border-orange-800/50 flex items-center justify-center">
                   <PenTool className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-gray-900 dark:text-white">Roadmap Notes</h3>
-                  <p className="text-xs text-gray-500">Auto-saved locally</p>
+                  <h3 className="font-bold text-slate-900 dark:text-white tracking-tight">Roadmap Notes</h3>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 font-light">Auto-saved locally</p>
                 </div>
               </div>
 
               <div className="flex-1 flex flex-col relative group">
                 <textarea
-                  className="w-full flex-1 p-4 bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl resize-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm text-gray-700 dark:text-gray-300 outline-none block"
+                  className="w-full flex-1 p-4 bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-800 rounded-2xl resize-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 transition-all text-sm text-slate-700 dark:text-slate-300 outline-none shadow-inner"
                   placeholder="Jot down your thoughts, blockers, or ideas. Example: Week 2 DOM manipulation felt tricky, need to re-watch the querySelector video..."
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
                 />
 
-                <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <span className="text-xs text-gray-400 bg-white/80 dark:bg-gray-800/80 px-2 py-1 rounded backdrop-blur-sm shadow-sm border border-gray-100 dark:border-gray-700">
+                <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                  <span className="text-xs text-slate-400 bg-white/80 dark:bg-slate-800/80 px-2 py-1 rounded backdrop-blur-md shadow-sm border border-slate-200 dark:border-slate-700">
                     Markdown supported
                   </span>
                 </div>
               </div>
 
-              <button className="mt-4 w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-foreground text-background dark:bg-white dark:text-black font-semibold hover:scale-[1.02] active:scale-[0.98] transition-all shadow-md">
+              <button className="mt-4 w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-slate-900 text-white dark:bg-white dark:text-slate-900 font-bold hover:scale-[1.02] active:scale-[0.98] hover:bg-slate-800 dark:hover:bg-slate-100 transition-all shadow-md shadow-slate-900/10 dark:shadow-white/10">
                 <Save className="w-4 h-4" /> Save Notes
               </button>
             </div>
 
             {/* Motivation Widget */}
-            <div className="bg-gradient-to-br from-primary to-accent p-6 rounded-3xl text-white shadow-lg relative overflow-hidden">
+            <div className="bg-gradient-to-br from-cyan-500 via-indigo-500 to-pink-500 p-6 rounded-3xl text-white shadow-lg shadow-indigo-500/20 relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-white/20 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
               <div className="relative z-10">
-                <h4 className="font-bold text-lg mb-2 flex items-center gap-2">
+                <h4 className="font-bold text-lg mb-2 flex items-center gap-2 drop-shadow-sm">
                   <TrendingUp className="w-5 h-5" /> Keep it up!
                 </h4>
-                <p className="text-white/80 text-sm">
+                <p className="text-white/90 text-sm font-light">
                   You are doing great. Consistency is key to mastering these concepts. Try to code for 30 minutes every day.
                 </p>
               </div>
