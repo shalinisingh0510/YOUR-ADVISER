@@ -7,31 +7,33 @@ const groq = new Groq({
 
 export const generateGroqRoadmap = async (userId, answers) => {
   const prompt = `
-    You are an expert career counselor and senior developer. 
-    Based on the following user profile, generate a comprehensive, week-by-week learning roadmap.
+    You are a world-class career strategist and senior software architect. 
+    Design a high-precision, 8-week learning roadmap for a user with the following profile:
+    
+    Target Domain: ${answers.topics || answers.interests || "Full Stack Development"}
+    Current Level: ${answers.aptitude_level || "Beginner"}
+    Commitment: ${answers.time_commitment || "5-8 hours/week"}
+    Learning Style: ${answers.learning_ability || "Visual/Practical"}
 
-    User Profile:
-    - Learning Preference: ${answers.learning_ability || "Average"}
-    - Topics of Interest: ${Array.isArray(answers.topics || answers.interests) ? (answers.topics || answers.interests).join(', ') : (answers.topics || answers.interests || "Web Development")}
-    - Available Time: ${answers.time_commitment || "5-7 hours"}
-    - Current Level: ${answers.aptitude_level || "Beginner"}
+    Requirements:
+    1. Weekly structure: title, duration, focus_skills (array), and difficulty (1-10).
+    2. Minimum 4 granual tasks per week. Each task must have: id, title, type (theory/coding/project), and duration_estimate.
+    3. Minimum 3 high-quality resources per week with real-world titles (e.g., specific YouTube channels or documentation sites).
+    4. Ensure the progression is logical and builds on previous weeks.
 
-    Return ONLY a valid JSON object matching the following structure exactly. 
-    It MUST have a root key "roadmap" containing an array of weekly objects.
+    Return ONLY a JSON object:
     {
       "roadmap": [
         {
-          "id": "week1",
-          "title": "Week Title",
-          "duration": "Week 1",
-          "status": "active",
+          "id": "w1",
+          "title": "...",
+          "focus_skills": ["...", "..."],
+          "difficulty": 3,
           "tasks": [
-            { "id": "t1", "title": "Task 1", "type": "reading" },
-            { "id": "t2", "title": "Task 2", "type": "video" },
-            { "id": "t3", "title": "Task 3", "type": "practice" }
+            { "id": "t1", "title": "...", "type": "coding", "duration": "2h" }
           ],
           "resources": [
-            { "title": "Resource 1", "type": "video", "url": "https://youtube.com/..." }
+            { "title": "...", "type": "video", "url": "https://..." }
           ]
         }
       ]
@@ -43,15 +45,15 @@ export const generateGroqRoadmap = async (userId, answers) => {
       messages: [
         {
           role: "system",
-          content: "You are an API that outputs strict, valid JSON. Never return conversational text."
+          content: "You are an elite career intelligence API. Output valid JSON only. Be ultra-specific and realistic with resource URLs."
         },
         {
           role: "user",
           content: prompt
         }
       ],
-      model: "llama3-8b-8192",
-      temperature: 0.5,
+      model: "llama3-70b-8192",
+      temperature: 0.45,
       response_format: { type: "json_object" }
     });
 
@@ -64,13 +66,13 @@ export const generateGroqRoadmap = async (userId, answers) => {
       `INSERT INTO roadmaps (user_id, focus_area, content)
        VALUES ($1, $2, $3)
        RETURNING *`,
-      [userId, (answers.topics || answers.interests || "General").toString(), JSON.stringify(roadmapArray)]
+      [userId, (answers.topics || answers.interests || "Primary Focus").toString(), JSON.stringify(roadmapArray)]
     );
 
     return result.rows[0];
   } catch (error) {
     console.error("Groq generation failed", error);
-    throw new Error("Failed to generate roadmap from AI.");
+    throw new Error("Roadmap architect failed to initialize. Resource exhaustion or API limits.");
   }
 };
 

@@ -29,7 +29,7 @@ export default function Navbar() {
   }, [location.pathname]);
 
   return (
-    <header className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${scrolled ? "bg-white/70 dark:bg-[#030712]/70 backdrop-blur-xl border-b border-slate-200/50 dark:border-slate-800/50 py-3 shadow-sm" : "bg-transparent py-6"}`}>
+    <header className={`fixed top-0 inset-x-0 z-50 transition-all duration-700 ${scrolled ? "bg-white/80 dark:bg-slate-950/80 backdrop-blur-2xl border-b border-slate-200/50 dark:border-slate-800/50 py-3 shadow-xl shadow-slate-200/20 dark:shadow-black/20" : "bg-transparent py-6"}`}>
       <div className="container px-4 md:px-8 mx-auto max-w-7xl flex items-center justify-between">
 
         {/* Brand */}

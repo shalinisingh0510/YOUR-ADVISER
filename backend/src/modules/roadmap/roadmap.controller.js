@@ -3,20 +3,28 @@ import pool from "../../config/db.js";
 
 export const generateRoadmap = async (req, res) => {
   try {
-    // Fetch user's latest questionnaire and aptitude answers from DB
     const qaResult = await pool.query(`SELECT answers FROM questionnaire_answers WHERE user_id = $1 ORDER BY created_at DESC LIMIT 1`, [req.user.id]);
     const aptResult = await pool.query(`SELECT answers FROM aptitude_answers WHERE user_id = $1 ORDER BY created_at DESC LIMIT 1`, [req.user.id]);
 
     const qaAnswers = qaResult.rows[0]?.answers || {};
     const aptAnswers = aptResult.rows[0]?.answers || {};
 
-    const combinedAnswers = { ...qaAnswers, ...aptAnswers };
+    // Simple Aptitude Scoring Logic
+    let score = 0;
+    if (aptAnswers.logic_1 === "32") score += 50;
+    if (aptAnswers.focus_1 === "Practice coding a recent topic") score += 50;
+
+    const combinedAnswers = { 
+      ...qaAnswers, 
+      aptitude_score: score,
+      aptitude_level: score >= 100 ? "Advanced" : score >= 50 ? "Intermediate" : "Beginner"
+    };
 
     const roadmap = await generateGroqRoadmap(req.user.id, combinedAnswers);
     return res.status(201).json({ message: "Roadmap generated", roadmap });
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: "Failed to generate roadmap" });
+    console.error("Roadmap generation controller error:", error);
+    return res.status(500).json({ message: "Engineering error during roadmap construction." });
   }
 };
 
