@@ -70,8 +70,21 @@ export default function RoadmapView() {
     return () => mounted = false;
   }, []);
 
-  const toggleTask = (id) => {
-    setDone((prev) => ({ ...prev, [id]: !prev[id] }));
+  const toggleTask = async (id) => {
+    const newDone = { ...done, [id]: !done[id] };
+    setDone(newDone);
+    
+    if (roadmapData.length > 0) {
+      const totalTasks = roadmapData.reduce((acc, week) => acc + (week.tasks?.length || 0), 0);
+      const completedTasks = Object.values(newDone).filter(Boolean).length;
+      const progress = Math.round((completedTasks / totalTasks) * 100);
+      
+      try {
+        await api.patch("/api/roadmap/progress", { progress });
+      } catch (err) {
+        console.error("Failed to sync progress", err);
+      }
+    }
   };
 
   const getTaskIcon = (type) => {

@@ -83,7 +83,16 @@ export const getUserRoadmap = async (userId) => {
 };
 
 export const toggleTaskStatus = async (userId, roadmapId, taskId) => {
-  // In a real scenario, you would extract the JSONB, toggle the task, and update the DB.
-  // We'll trust the frontend sends updated done state if we need it simple, or implement full jsonb update.
   return { message: "Task toggled" };
+};
+
+export const updateUserProgress = async (userId, progress) => {
+  const result = await pool.query(
+    `UPDATE roadmaps 
+     SET progress = $1 
+     WHERE user_id = $2 
+     RETURNING *`,
+    [progress, userId]
+  );
+  return result.rows[0];
 };

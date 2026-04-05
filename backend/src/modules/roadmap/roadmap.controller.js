@@ -1,4 +1,4 @@
-import { generateGroqRoadmap, getUserRoadmap } from "./roadmap.service.js";
+import { generateGroqRoadmap, getUserRoadmap, updateUserProgress } from "./roadmap.service.js";
 import pool from "../../config/db.js";
 
 export const generateRoadmap = async (req, res) => {
@@ -30,5 +30,16 @@ export const fetchRoadmap = async (req, res) => {
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Failed to fetch roadmap" });
+  }
+};
+
+export const updateProgress = async (req, res) => {
+  const { progress } = req.body;
+  try {
+    const updated = await updateUserProgress(req.user.id, progress);
+    return res.status(200).json({ message: "Progress updated", roadmap: updated });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Failed to update progress" });
   }
 };
