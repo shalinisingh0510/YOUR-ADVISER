@@ -37,12 +37,15 @@ export default function RoadmapView() {
       .then(res => {
         if(mounted) {
           try {
-            const parsed = typeof res.data.roadmap.content === 'string' 
-              ? JSON.parse(res.data.roadmap.content) 
-              : res.data.roadmap.content;
+            const roadmap = res.data.roadmap;
+            const parsed = typeof roadmap.content === 'string' 
+              ? JSON.parse(roadmap.content) 
+              : roadmap.content;
             
             const data = Array.isArray(parsed) ? parsed : (parsed?.roadmap || []);
             setRoadmapData(data);
+            setNotes(roadmap.notes || "");
+            
             if (data.length > 0) {
               setActiveWeek(data[0].id);
             }
@@ -61,6 +64,18 @@ export default function RoadmapView() {
       });
     return () => mounted = false;
   }, []);
+
+  const handleSaveNotes = async () => {
+    setSavingNotes(true);
+    try {
+      await api.patch("/api/roadmap/notes", { notes });
+      // Optional: success toast/feedback
+    } catch (err) {
+      console.error("Failed to save notes", err);
+    } finally {
+      setTimeout(() => setSavingNotes(false), 800);
+    }
+  };
 
   const toggleTask = async (id) => {
     const newDone = { ...done, [id]: !done[id] };
@@ -332,6 +347,7 @@ export default function RoadmapView() {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   disabled={savingNotes}
+                  onClick={handleSaveNotes}
                   className="w-full py-5 rounded-2xl bg-slate-900 text-white dark:bg-indigo-600 dark:text-white font-black text-sm uppercase tracking-widest shadow-xl flex items-center justify-center gap-3 disabled:opacity-50"
                 >
                   <Save className={`w-4 h-4 ${savingNotes ? 'animate-pulse' : ''}`} />

@@ -23,17 +23,20 @@ export default function Dashboard() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [roadmap, setRoadmap] = useState(null);
+  const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
   const [regenerating, setRegenerating] = useState(false);
 
   const fetchData = async () => {
     try {
-      const [profileRes, roadmapRes] = await Promise.all([
+      const [profileRes, roadmapRes, historyRes] = await Promise.all([
         api.get("/api/auth/profile"),
-        api.get("/api/roadmap").catch(() => ({ data: { roadmap: null } }))
+        api.get("/api/roadmap").catch(() => ({ data: { roadmap: null } })),
+        api.get("/api/roadmap/history").catch(() => ({ data: { history: [] } }))
       ]);
       setUser(profileRes.data.user);
       setRoadmap(roadmapRes.data.roadmap);
+      setHistory(historyRes.data.history || []);
     } catch (err) {
       console.error("Dashboard data fetch failed", err);
     } finally {
@@ -277,18 +280,32 @@ export default function Dashboard() {
                   <History className="w-5 h-5 text-slate-400" /> Version Control
                 </h2>
                 <div className="space-y-4">
-                  <div className="p-6 rounded-[2rem] bg-white/50 dark:bg-slate-950/20 border border-slate-200 dark:border-slate-800/50 flex items-center justify-between group cursor-pointer hover:bg-white dark:hover:bg-slate-900 transition-all">
-                    <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-900 flex items-center justify-center text-slate-400 group-hover:bg-indigo-500/10 group-hover:text-indigo-500 transition-colors">
-                        <History className="w-5 h-5" />
+                  {history.length > 0 ? (
+                    history.slice(1).map((item, i) => (
+                      <div 
+                        key={item.id}
+                        onClick={() => navigate("/roadmap")} // In future, could navigate to specific ID
+                        className="p-6 rounded-[2rem] bg-white/50 dark:bg-slate-950/20 border border-slate-200 dark:border-slate-800/50 flex items-center justify-between group cursor-pointer hover:bg-white dark:hover:bg-slate-900 transition-all"
+                      >
+                        <div className="flex items-center gap-4">
+                          <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-900 flex items-center justify-center text-slate-400 group-hover:bg-indigo-500/10 group-hover:text-indigo-500 transition-colors">
+                            <History className="w-5 h-5" />
+                          </div>
+                          <div>
+                            <h4 className="text-sm font-bold dark:text-white">{item.version_name || `v1.${history.length - i - 1}`}</h4>
+                            <p className="text-[10px] text-slate-500 uppercase tracking-widest font-black">
+                              {new Date(item.created_at).toLocaleDateString()}
+                            </p>
+                          </div>
+                        </div>
+                        <ArrowRight className="w-4 h-4 text-slate-300 group-hover:translate-x-1 transition-transform" />
                       </div>
-                      <div>
-                        <h4 className="text-sm font-bold dark:text-white">v1.0 Basic Path</h4>
-                        <p className="text-[10px] text-slate-500 uppercase tracking-widest font-black">Archive</p>
-                      </div>
+                    ))
+                  ) : (
+                    <div className="p-10 text-center opacity-40 border border-dashed border-slate-200 dark:border-slate-800 rounded-[2rem]">
+                      <p className="text-xs font-bold uppercase tracking-widest">No archives found</p>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-slate-300 group-hover:translate-x-1 transition-transform" />
-                  </div>
+                  )}
                 </div>
               </div>
             </aside>

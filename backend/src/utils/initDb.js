@@ -37,7 +37,13 @@ export const initDb = async () => {
       focus_area VARCHAR(255),
       content JSONB NOT NULL,
       progress INTEGER DEFAULT 0,
+      notes TEXT DEFAULT '',
+      version_name VARCHAR(100) DEFAULT 'Blueprint v1.0',
       created_at TIMESTAMP DEFAULT NOW()
     );
   `);
+
+  // Ensure new columns exist for existing tables
+  await pool.query("ALTER TABLE roadmaps ADD COLUMN IF NOT EXISTS notes TEXT DEFAULT '';");
+  await pool.query("ALTER TABLE roadmaps ADD COLUMN IF NOT EXISTS version_name VARCHAR(100) DEFAULT 'Blueprint v1.0';");
 };
