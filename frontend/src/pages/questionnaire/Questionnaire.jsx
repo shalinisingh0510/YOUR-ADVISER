@@ -134,9 +134,9 @@ export default function Questionnaire() {
   const currentQ = questions[currentStep];
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#030712] text-slate-900 dark:text-slate-50 selection:bg-cyan-500/30 transition-colors duration-500 relative overflow-hidden flex flex-col pt-24">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#030712] text-slate-900 dark:text-slate-50 selection:bg-cyan-500/30 transition-colors duration-500 relative flex flex-col pt-32 lg:pt-40">
       {/* Premium Background Ornaments */}
-      <div className="absolute top-0 inset-x-0 h-screen overflow-hidden -z-10 pointer-events-none">
+      <div className="absolute top-0 inset-x-0 h-screen overflow-hidden -z-20 pointer-events-none">
         <div className="absolute top-[-10%] right-[-5%] w-[800px] h-[800px] bg-cyan-600/10 dark:bg-cyan-600/5 rounded-full blur-[120px] animate-blob" />
         <div className="absolute bottom-[-10%] left-[-5%] w-[700px] h-[700px] bg-indigo-600/10 dark:bg-indigo-600/5 rounded-full blur-[120px] animate-blob animation-delay-2000" />
       </div>
@@ -251,13 +251,13 @@ export default function Questionnaire() {
               </motion.div>
             </AnimatePresence>
 
-            <div className="flex items-center gap-6 pt-8">
+            <div className="flex items-center gap-6 pt-8 relative z-10">
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={handlePrev}
                 disabled={currentStep === 0}
-                className="px-8 py-4 rounded-2xl font-bold flex items-center gap-2 text-slate-500 hover:text-slate-900 dark:hover:text-white disabled:opacity-20 transition-all border border-slate-200 dark:border-slate-800"
+                className="px-8 py-4 rounded-2xl font-bold flex items-center gap-2 text-slate-500 hover:text-slate-900 dark:hover:text-white disabled:opacity-20 transition-all border border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm"
               >
                 <ArrowLeft className="w-5 h-5" /> Previous
               </motion.button>
@@ -268,7 +268,7 @@ export default function Questionnaire() {
                   whileTap={{ scale: 0.98 }}
                   onClick={onSubmit}
                   disabled={!isCurrentStepValid() || status.loading}
-                  className="flex-1 px-8 py-4 rounded-2xl font-bold bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-xl shadow-slate-900/10 dark:shadow-white/10 flex items-center justify-center gap-3 transition-all hover:bg-slate-800 dark:hover:bg-slate-100 disabled:opacity-50"
+                  className="flex-1 px-8 py-4 rounded-2xl font-bold bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-xl shadow-slate-900/10 dark:shadow-white/10 flex items-center justify-center gap-3 transition-all hover:bg-slate-800 dark:hover:bg-slate-100 disabled:opacity-50 cursor-pointer pointer-events-auto"
                 >
                   {status.loading ? "Processing profile..." : "Save Learning DNA"}
                   {!status.loading && <Sparkles className="w-5 h-5" />}
@@ -279,7 +279,7 @@ export default function Questionnaire() {
                   whileTap={{ scale: 0.98 }}
                   onClick={handleNext}
                   disabled={!isCurrentStepValid()}
-                  className="flex-1 px-8 py-4 rounded-2xl font-bold bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-xl shadow-slate-900/10 dark:shadow-white/10 flex items-center justify-center gap-2 transition-all hover:bg-slate-800 dark:hover:bg-slate-100 disabled:opacity-50"
+                  className="flex-1 px-8 py-4 rounded-2xl font-bold bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-xl shadow-slate-900/10 dark:shadow-white/10 flex items-center justify-center gap-2 transition-all hover:bg-slate-800 dark:hover:bg-slate-100 disabled:opacity-50 cursor-pointer pointer-events-auto"
                 >
                   Continue <ArrowRight className="w-5 h-5" />
                 </motion.button>

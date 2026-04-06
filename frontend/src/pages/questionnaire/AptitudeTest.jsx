@@ -82,9 +82,9 @@ export default function AptitudeTest() {
   const currentQ = sampleQuestions[currentStep];
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#030712] text-slate-900 dark:text-slate-50 selection:bg-cyan-500/30 transition-colors duration-500 relative overflow-hidden flex flex-col pt-24">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#030712] text-slate-900 dark:text-slate-50 selection:bg-cyan-500/30 transition-colors duration-500 relative flex flex-col pt-32 lg:pt-40">
       {/* Premium Background Ornaments */}
-      <div className="absolute top-0 inset-x-0 h-screen overflow-hidden -z-10 pointer-events-none">
+      <div className="absolute top-0 inset-x-0 h-screen overflow-hidden -z-20 pointer-events-none">
         <div className="absolute top-[-10%] left-[-5%] w-[800px] h-[800px] bg-pink-600/10 dark:bg-pink-600/5 rounded-full blur-[120px] animate-blob" />
         <div className="absolute bottom-[-10%] right-[-5%] w-[700px] h-[700px] bg-cyan-600/10 dark:bg-cyan-600/5 rounded-full blur-[120px] animate-blob animation-delay-4000" />
       </div>
@@ -193,13 +193,13 @@ export default function AptitudeTest() {
               </motion.div>
             </AnimatePresence>
 
-            <div className="flex items-center gap-6 pt-8">
+            <div className="flex items-center gap-6 pt-8 relative z-10">
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={handlePrev}
                 disabled={currentStep === 0}
-                className="px-8 py-4 rounded-2xl font-bold flex items-center gap-2 text-slate-500 hover:text-slate-900 dark:hover:text-white disabled:opacity-20 transition-all border border-slate-200 dark:border-slate-800"
+                className="px-8 py-4 rounded-2xl font-bold flex items-center gap-2 text-slate-500 hover:text-slate-900 dark:hover:text-white disabled:opacity-20 transition-all border border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm"
               >
                 <ArrowLeft className="w-5 h-5" /> Previous
               </motion.button>
@@ -210,7 +210,7 @@ export default function AptitudeTest() {
                   whileTap={{ scale: 0.98 }}
                   onClick={onSubmit}
                   disabled={!isCurrentStepValid() || status.loading}
-                  className="flex-1 px-8 py-4 rounded-2xl font-black bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-[0_20px_50px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_rgba(255,255,255,0.05)] flex items-center justify-center gap-3 transition-all hover:bg-slate-800 dark:hover:bg-slate-100 disabled:opacity-50 group"
+                  className="flex-1 px-8 py-4 rounded-2xl font-black bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-[0_20px_50px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_rgba(255,255,255,0.05)] flex items-center justify-center gap-3 transition-all hover:bg-slate-800 dark:hover:bg-slate-100 disabled:opacity-50 group cursor-pointer pointer-events-auto"
                 >
                   {status.loading ? "Architecting your path..." : "Generate My Roadmap"}
                   {!status.loading && <Sparkles className="w-5 h-5 group-hover:rotate-12 transition-transform" />}
@@ -221,7 +221,7 @@ export default function AptitudeTest() {
                   whileTap={{ scale: 0.98 }}
                   onClick={handleNext}
                   disabled={!isCurrentStepValid()}
-                  className="flex-1 px-8 py-4 rounded-2xl font-bold bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-xl flex items-center justify-center gap-2 transition-all hover:bg-slate-800 dark:hover:bg-slate-100 disabled:opacity-50"
+                  className="flex-1 px-8 py-4 rounded-2xl font-bold bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-xl flex items-center justify-center gap-2 transition-all hover:bg-slate-800 dark:hover:bg-slate-100 disabled:opacity-50 cursor-pointer pointer-events-auto"
                 >
                   Continue <ArrowRight className="w-5 h-5" />
                 </motion.button>
