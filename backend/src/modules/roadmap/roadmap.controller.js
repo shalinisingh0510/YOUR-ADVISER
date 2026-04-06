@@ -34,12 +34,14 @@ export const generateRoadmap = async (req, res) => {
     console.log(`🤖 [Roadmap] Initializing AI generation for user: ${req.user.id}`);
     const roadmap = await generateGroqRoadmap(req.user.id, combinedAnswers);
     console.log(`✅ [Roadmap] Generation successful for user: ${req.user.id}`);
+    
     return res.status(201).json({ message: "Roadmap generated", roadmap });
   } catch (error) {
     console.error("❌ Roadmap generation controller error:", error);
     return res.status(500).json({ 
       message: "Engineering error during roadmap construction.",
-      error: process.env.NODE_ENV === "development" ? error.message : undefined 
+      debug: error.message,
+      stack: error.stack
     });
   }
 };

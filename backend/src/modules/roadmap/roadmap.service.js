@@ -1,8 +1,16 @@
 import Groq from "groq-sdk";
 import pool from "../../config/db.js";
 
+const groqKey = (process.env.GROQ_API_KEY || "").trim();
+if (!groqKey) {
+  console.warn("⚠️ WARNING: GROQ_API_KEY is missing from environment variables!");
+} else {
+  const masked = groqKey.substring(0, 4) + "..." + groqKey.substring(groqKey.length - 4);
+  console.log(`🤖 [Roadmap] Groq API Key loaded: [${masked}]`);
+}
+
 const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY
+  apiKey: groqKey
 });
 
 export const generateGroqRoadmap = async (userId, answers) => {
@@ -62,17 +70,22 @@ export const generateGroqRoadmap = async (userId, answers) => {
     const roadmapArray = outputJSON.roadmap || [];
 
     // Save to DB
-    const result = await pool.query(
-      `INSERT INTO roadmaps (user_id, focus_area, content)
-       VALUES ($1, $2, $3)
-       RETURNING *`,
-      [userId, (answers.topics || answers.interests || "Primary Focus").toString(), JSON.stringify(roadmapArray)]
-    );
+    try {
+      const result = await pool.query(
+        `INSERT INTO roadmaps (user_id, focus_area, content)
+         VALUES ($1, $2, $3)
+         RETURNING *`,
+        [userId, (answers.topics || answers.interests || "Primary Focus").toString(), JSON.stringify(roadmapArray)]
+      );
 
-    return result.rows[0];
+      return result.rows[0];
+    } catch (dbError) {
+      console.error("❌ Database insertion failed in roadmap service:", dbError.message);
+      throw new Error(`DB_INSERT_FAIL: ${dbError.message}`);
+    }
   } catch (error) {
-    console.error("Groq generation failed", error);
-    throw new Error("Roadmap architect failed to initialize. Resource exhaustion or API limits.");
+    console.error("❌ Roadmap generation core failure:", error.message);
+    throw error;
   }
 };
 
