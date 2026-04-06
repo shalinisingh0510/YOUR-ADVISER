@@ -6,7 +6,12 @@ import roadmapRoutes from "./modules/roadmap/roadmap.routes.js";
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: "*", // Or specify exact frontend domain if available
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true
+}));
 app.use(express.json());
 
 app.get("/api/health", (req, res) => {

@@ -5,6 +5,7 @@ export const requireAuth = (req, res, next) => {
   const token = header.startsWith("Bearer ") ? header.slice(7) : null;
 
   if (!token) {
+    console.warn(`🔒 [Auth] Missing token for ${req.method} ${req.url}`);
     return res.status(401).json({ message: "Unauthorized" });
   }
 
@@ -13,6 +14,7 @@ export const requireAuth = (req, res, next) => {
     req.user = decoded;
     return next();
   } catch (error) {
+    console.warn(`🔒 [Auth] Verification failed for ${req.method} ${req.url}: ${error.message} - Token head: ${token.substring(0, 10)}...`);
     return res.status(401).json({ message: "Invalid token" });
   }
 };

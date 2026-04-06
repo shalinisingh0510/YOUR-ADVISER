@@ -117,13 +117,32 @@ export default function RoadmapView() {
   if (error) {
     return (
       <div className="min-h-screen bg-[#030712] flex flex-col items-center justify-center p-6 text-center">
-        <div className="w-24 h-24 bg-red-500/10 rounded-[2rem] flex items-center justify-center text-red-500 mb-8 border border-red-500/20">
-          <BrainCircuit className="w-12 h-12" />
+        <div className="relative mb-12">
+          <div className="absolute inset-0 bg-indigo-500/20 blur-3xl rounded-full" />
+          <div className="relative w-32 h-32 bg-slate-900/50 rounded-[2.5rem] flex items-center justify-center text-indigo-500 border border-indigo-500/20 shadow-2xl">
+            <BrainCircuit className="w-16 h-16" />
+          </div>
         </div>
-        <h2 className="text-3xl font-black text-white mb-4 tracking-tighter">{error}</h2>
-        <NavLink to="/dashboard" className="px-8 py-4 bg-white text-slate-900 rounded-2xl font-black shadow-xl hover:scale-105 transition-transform flex items-center gap-2">
-          <ArrowLeft className="w-5 h-5" /> Return to Base
-        </NavLink>
+        <h2 className="text-4xl font-black text-white mb-4 tracking-tighter uppercase whitespace-pre-line">
+          Trajectory System <span className="text-indigo-500">Offline</span>
+        </h2>
+        <p className="text-slate-400 max-w-md mb-10 text-lg leading-relaxed">
+          No active learning blueprint was detected in your current sector. Initialize the neural link to generate your path.
+        </p>
+        <div className="flex flex-col sm:flex-row gap-4">
+          <NavLink 
+            to="/questionnaire" 
+            className="px-10 py-5 bg-indigo-600 text-white rounded-2xl font-black shadow-[0_20px_40px_rgba(79,70,229,0.3)] hover:scale-105 active:scale-95 transition-all flex items-center gap-3 uppercase tracking-widest text-xs"
+          >
+            <Zap className="w-5 h-5 fill-current" /> Initialize Blueprint
+          </NavLink>
+          <NavLink 
+            to="/dashboard" 
+            className="px-10 py-5 bg-slate-900 text-slate-400 border border-slate-800 rounded-2xl font-black hover:bg-slate-800 transition-all flex items-center gap-3 uppercase tracking-widest text-xs"
+          >
+            <ArrowLeft className="w-5 h-5" /> Return to Base
+          </NavLink>
+        </div>
       </div>
     );
   }

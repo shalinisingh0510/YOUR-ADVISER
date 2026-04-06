@@ -9,11 +9,16 @@ import pool from "../../config/db.js";
 
 export const generateRoadmap = async (req, res) => {
   try {
+    console.log(`🧠 [Roadmap] Fetching answers for user: ${req.user.id}`);
     const qaResult = await pool.query(`SELECT answers FROM questionnaire_answers WHERE user_id = $1 ORDER BY created_at DESC LIMIT 1`, [req.user.id]);
     const aptResult = await pool.query(`SELECT answers FROM aptitude_answers WHERE user_id = $1 ORDER BY created_at DESC LIMIT 1`, [req.user.id]);
 
     const qaAnswers = qaResult.rows[0]?.answers || {};
     const aptAnswers = aptResult.rows[0]?.answers || {};
+
+    if (!qaAnswers.topics && !qaAnswers.interests) {
+      console.warn(`⚠️ [Roadmap] User ${req.user.id} has no questionnaire answers. Using defaults.`);
+    }
 
     // Simple Aptitude Scoring Logic
     let score = 0;
@@ -26,11 +31,16 @@ export const generateRoadmap = async (req, res) => {
       aptitude_level: score >= 100 ? "Advanced" : score >= 50 ? "Intermediate" : "Beginner"
     };
 
+    console.log(`🤖 [Roadmap] Initializing AI generation for user: ${req.user.id}`);
     const roadmap = await generateGroqRoadmap(req.user.id, combinedAnswers);
+    console.log(`✅ [Roadmap] Generation successful for user: ${req.user.id}`);
     return res.status(201).json({ message: "Roadmap generated", roadmap });
   } catch (error) {
-    console.error("Roadmap generation controller error:", error);
-    return res.status(500).json({ message: "Engineering error during roadmap construction." });
+    console.error("❌ Roadmap generation controller error:", error);
+    return res.status(500).json({ 
+      message: "Engineering error during roadmap construction.",
+      error: process.env.NODE_ENV === "development" ? error.message : undefined 
+    });
   }
 };
 

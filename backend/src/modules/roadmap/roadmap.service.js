@@ -92,7 +92,12 @@ export const updateUserProgress = async (userId, progress) => {
   const result = await pool.query(
     `UPDATE roadmaps 
      SET progress = $1 
-     WHERE user_id = $2 
+     WHERE id = (
+       SELECT id FROM roadmaps 
+       WHERE user_id = $2 
+       ORDER BY created_at DESC 
+       LIMIT 1
+     )
      RETURNING *`,
     [progress, userId]
   );
@@ -103,9 +108,12 @@ export const updateRoadmapNotes = async (userId, notes) => {
   const result = await pool.query(
     `UPDATE roadmaps 
      SET notes = $1 
-     WHERE user_id = $2 
-     ORDER BY created_at DESC 
-     LIMIT 1
+     WHERE id = (
+       SELECT id FROM roadmaps 
+       WHERE user_id = $2 
+       ORDER BY created_at DESC 
+       LIMIT 1
+     )
      RETURNING *`,
     [notes, userId]
   );
